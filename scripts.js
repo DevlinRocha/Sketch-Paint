@@ -1,36 +1,41 @@
 const container = document.querySelector('#container');
+const pixels = document.querySelectorAll('.pixel');
+
+const heightInput = document.querySelector('#height');
+const widthInput = document.querySelector('#width');
+let height = parseInt(heightInput.value);
+let width = parseInt(widthInput.value);
+
 
 function createGrid(height, width) {
-    container.style.gridTemplateColumns = `repeat(${height}, 1fr)`;
-    container.style.gridTemplateRows = `repeat(${width}, 1fr)`;
-
+    container.style.gridTemplateRows = `repeat(${height}, 1fr)`;
+    container.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+    
     for (let h = 1; h <= height; h++) {
         for (let w = 1; w <= width; w++) {
             let gridItem = document.createElement('div');
             gridItem.textContent = 'X';
-            gridItem.classList.toggle('pixel')
+            gridItem.classList.add('pixel')
             gridItem.setAttribute('id', `H${h}W${w}`);
+            gridItem.addEventListener('mouseover', draw);
             container.appendChild(gridItem);
-            
         }
-        //gridItem.style.gridArea = h;
-        //gridItem.textContent = h;
     }
-
-    //for (let w = 1; w <= width; w++) {
-    //    let gridItem = document.createElement('div');
-    //    gridItem.style.gridArea = w;
-    //    gridItem.textContent = w;
-    //    container.appendChild(gridItem);
-    //}
+}
+    
+function draw() {
+    this.style.backgroundColor = 'red'; 
+}
+    
+function reset() {
+    const pixels = document.querySelectorAll('.pixel');
+    pixels.forEach((pixel) => pixel.remove());
+    height = parseInt(heightInput.value);
+    width = parseInt(widthInput.value);
+    createGrid(height, width);
 }
 
-function draw(e) {
-    this.style.backgroundColor = 'red';
-    //console.log(e);
-}
+const resetButton = document.querySelector('#reset-button');
+resetButton.addEventListener('click', reset);
 
-createGrid(16, 16);
-
-const pixels = document.querySelectorAll('.pixel');
-pixels.forEach((pixel) => pixel.addEventListener('mouseover', draw));
+createGrid(height, width);
