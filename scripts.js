@@ -1,10 +1,7 @@
 const container = document.querySelector('#container');
 const pixels = document.querySelectorAll('.pixel');
-
 const heightInput = document.querySelector('#height');
 const widthInput = document.querySelector('#width');
-let height = parseInt(heightInput.value);
-let width = parseInt(widthInput.value);
 
 
 function createGrid(height, width) {
@@ -14,7 +11,6 @@ function createGrid(height, width) {
     for (let h = 1; h <= height; h++) {
         for (let w = 1; w <= width; w++) {
             let gridItem = document.createElement('div');
-            gridItem.textContent = 'X';
             gridItem.classList.add('pixel')
             gridItem.setAttribute('id', `H${h}W${w}`);
             gridItem.addEventListener('mouseover', draw);
@@ -22,11 +18,11 @@ function createGrid(height, width) {
         }
     }
 }
-    
+
 function draw() {
-    this.style.backgroundColor = 'red'; 
+    this.style.backgroundColor = 'red';
 }
-    
+
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.remove());
@@ -38,4 +34,6 @@ function reset() {
 const resetButton = document.querySelector('#reset-button');
 resetButton.addEventListener('click', reset);
 
+let height = parseInt(heightInput.value);
+let width = parseInt(widthInput.value);
 createGrid(height, width);
