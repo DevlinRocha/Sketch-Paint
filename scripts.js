@@ -1,4 +1,5 @@
 const container = document.querySelector('#container');
+const inputs = document.querySelectorAll('.grid-dimensions');
 const heightInput = document.querySelector('#height-input');
 const widthInput = document.querySelector('#width-input');
 
@@ -12,6 +13,7 @@ function createGrid(height, width) {
             gridItem.classList.add('pixel')
             gridItem.setAttribute('id', `H${h}W${w}`);
             gridItem.addEventListener('mouseover', draw);
+            gridItem.addEventListener('touch', draw);
             container.appendChild(gridItem);
         }
     }
@@ -23,11 +25,18 @@ function draw() {
 
 function link() {
     linkButton.classList.toggle('linked');
-    heightInput.classList.toggle('linked');
-    widthInput.classList.toggle('linked');
-    const linked = document.querySelectorAll('.linked');
-    linked.forEach((link) => link.addEventListener('change', changeBoth))
-}
+    //heightInput.classList.toggle('linked');
+    //widthInput.classList.toggle('linked');
+    console.log(inputs);
+    inputs.forEach((input) => {
+        input.classList.toggle('linked');
+        if(input.classList.contains('linked')) {
+            input.addEventListener('change', changeBoth)
+        } else {
+            input.removeEventListener('change', changeBoth)
+        }
+    })
+};
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
@@ -44,6 +53,9 @@ function changeBoth(e) {
 
 function changeColor() {
     color = this.dataset.color;
+    colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = '');
+    this.style.backgroundColor = this.dataset.color;
+    console.log(this);
 }
 
 let color = 'black';

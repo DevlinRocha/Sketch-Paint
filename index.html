@@ -9,11 +9,17 @@
 <body>
     <main id="main">
         <div id="inputs">
-            <label for="height">Height:</label>
-            <input type="number" id="height-input" name="height" value=16 min=1 max=100>
+            <div>
+            
+                <label for="height">Height:</label>
+                <input type="number" id="height-input" name="height" class="grid-dimensions" value=16 min=1 max=100>
+            </div>
             <button id="link-button">Link</button>
-            <label for="width">Width:</label>
-            <input type="number" id="width-input" name="width" value=16 min=1 max=100>
+            <div>
+
+                <label for="width">Width:</label>
+                <input type="number" id="width-input" name="width" class="grid-dimensions" value=16 min=1 max=100>
+            </div>
             <button id="reset-button">Reset</button>
         </div>
         <div id="container"></div>
@@ -27,6 +33,7 @@
             <button id="purple-button" class="color-button" data-color="purple">Purple</button>
             <button id="white-button" class="color-button" data-color="white">White</button>
         </div>
+        <span>Version: 0.0.001</span>
     </main>
     <script src="scripts.js"></script>
 </body>
