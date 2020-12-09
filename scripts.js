@@ -51,7 +51,9 @@ function changeBoth(e) {
 function changeColor() {
     color = this.dataset.color;
     colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = '');
+    colorButtons.forEach((colorButton) => colorButton.style.flex = 1);
     this.style.backgroundColor = this.dataset.color;
+    this.style.flex = 2;
 }
 
 let color = 'black';
