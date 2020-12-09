@@ -62,3 +62,8 @@ html {
 .linked {
     background-color: yellow;
 }
+
+#version {
+    margin-top: 10px;
+    font-size: 10px;
+}

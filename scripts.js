@@ -25,9 +25,6 @@ function draw() {
 
 function link() {
     linkButton.classList.toggle('linked');
-    //heightInput.classList.toggle('linked');
-    //widthInput.classList.toggle('linked');
-    console.log(inputs);
     inputs.forEach((input) => {
         input.classList.toggle('linked');
         if(input.classList.contains('linked')) {
@@ -55,7 +52,6 @@ function changeColor() {
     color = this.dataset.color;
     colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = '');
     this.style.backgroundColor = this.dataset.color;
-    console.log(this);
 }
 
 let color = 'black';
