@@ -12,7 +12,7 @@ html {
     grid-template-areas:
     "inputs"
     "container";
-    justify-items: stretch;
+    justify-items: center;
 }
 
 #inputs {
@@ -26,18 +26,20 @@ html {
 }
 
 #container {
+    transition: all 0.5s;
     grid-area: container;
     display: grid;
     border: 1px solid black;
     min-height: 80vh;
     min-width: 100vw;
-    max-height: 100vh;
+    max-height: 80vh;
     max-width: 100vw;
 }
 
 .pixel {
-    min-height: 25px;
-    min-width: 10px;
+    transition: all 0.5s;
+    min-height: 1px;
+    min-width: 1px;
 }
 
 .linked {

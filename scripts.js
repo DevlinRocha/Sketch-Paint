@@ -18,7 +18,7 @@ function createGrid(height, width) {
 }
 
 function draw() {
-    this.style.backgroundColor = 'red';
+    this.style.backgroundColor = `${color}`;
 }
 
 function link() {
@@ -41,6 +41,14 @@ function changeBoth(e) {
     heightInput.value = this.value;
     widthInput.value = this.value;
 }
+
+function changeColor() {
+    color = this.dataset.color;
+}
+
+let color = 'black';
+const colorButtons = document.querySelectorAll('.color-button');
+colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
 
 const linkButton = document.querySelector('#link-button');
 linkButton.addEventListener('click', link);
