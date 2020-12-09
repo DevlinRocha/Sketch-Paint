@@ -32,16 +32,14 @@ function link() {
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.remove());
-    height = parseInt(heightInput.value);
-    width = parseInt(widthInput.value);
+    height = heightInput.value;
+    width = widthInput.value;
     createGrid(height, width);
 }
 
 function changeBoth(e) {
-    height = this.value;
-    width = this.value;
-    console.log({height, width});
-    console.log(this.value);
+    heightInput.value = this.value;
+    widthInput.value = this.value;
 }
 
 const linkButton = document.querySelector('#link-button');
@@ -53,6 +51,6 @@ linked.forEach((link) => link.addEventListener('change', changeBoth))
 const resetButton = document.querySelector('#reset-button');
 resetButton.addEventListener('click', reset);
 
-let height = parseInt(heightInput.value);
-let width = parseInt(widthInput.value);
+let height = heightInput.value;
+let width = widthInput.value;
 createGrid(height, width);
