@@ -22,10 +22,10 @@ body {
 }
 
 #main {
-    height: 100vh;
     height: -moz-available;
     height: -webkit-fill-available;
     height: fill-available;
+    height: 100%;
     width: 100vw;
     max-width: 100%;
     display: grid;
@@ -78,9 +78,9 @@ body {
     grid-area: container;
     display: grid;
     border: 1px solid black;
-    height: 100%;
     height: -webkit-fill-available;
     height: fill-available;
+    height: 100%;
     width: 100%;
     max-width: 100%;
     touch-action: none;
