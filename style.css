@@ -3,19 +3,19 @@
 }
 
 html {
-    position: fixed;
     height: 100%;
     width: 100%;
 }
 
 body {
-    height: 100%;
-    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 #main {
+    position: fixed;
     height: 100%;
-    width: 100%;
+    min-width: 100%;
     max-width: 100%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
@@ -63,6 +63,8 @@ body {
 }
 
 #container {
+    min-height: 100%;
+    min-width: 100%;
     transition: all 0.5s; 
     grid-area: container;
     display: grid;
