@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="reset" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,23 +10,27 @@
 <body>
     <main id="main">
         <div id="inputs">
+            <div id="height-selector" class="selector">
                 <label for="height">Height:</label>
                 <input type="number" id="height-input" name="height" class="grid-dimensions" value=16 min=1 max=100>
+            </div>
             <button id="link-button">Link</button>
+            <div id="width-selector" class="selector">
                 <label for="width">Width:</label>
                 <input type="number" id="width-input" name="width" class="grid-dimensions" value=16 min=1 max=100>
+            </div>
             <button id="reset-button">Reset</button>
         </div>
         <div id="container"></div>
         <div id="colors">
-            <button id="black-button" class="color-button" data-color="black">Black</button>
-            <button id="red-button" class="color-button" data-color="red">Red</button>
-            <button id="orange-button" class="color-button" data-color="orange">Orange</button>
-            <button id="yellow-button" class="color-button" data-color="yellow">Yellow</button>
-            <button id="green-button" class="color-button" data-color="green">Green</button>
-            <button id="blue-button" class="color-button" data-color="blue">Blue</button>
-            <button id="purple-button" class="color-button" data-color="purple">Purple</button>
-            <button id="white-button" class="color-button" data-color="white">White</button>
+            <button id="black-button" class="color-button" data-color="black"></button>
+            <button id="red-button" class="color-button" data-color="red"></button>
+            <button id="orange-button" class="color-button" data-color="orange"></button>
+            <button id="yellow-button" class="color-button" data-color="yellow"></button>
+            <button id="green-button" class="color-button" data-color="green"></button>
+            <button id="blue-button" class="color-button" data-color="blue"></button>
+            <button id="purple-button" class="color-button" data-color="purple"></button>
+            <button id="white-button" class="color-button" data-color="white"></button>
         </div>
     </main>
     <script src="scripts.js"></script>

@@ -59,15 +59,14 @@ function changeBoth(e) {
 
 function changeColor() {
     color = this.dataset.color;
-    colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = '');
-    colorButtons.forEach((colorButton) => colorButton.style.flex = 1);
-    this.style.backgroundColor = this.dataset.color;
-    this.style.flex = 2;
+    colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
+    this.classList.add('active');
 }
 
 let color = 'black';
 const colorButtons = document.querySelectorAll('.color-button');
 colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
+colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = colorButton.dataset.color);
 
 const linkButton = document.querySelector('#link-button');
 linkButton.addEventListener('click', link);
