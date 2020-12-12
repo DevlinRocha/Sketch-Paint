@@ -12,12 +12,12 @@
         <div id="inputs">
             <div id="height-selector" class="selector">
                 <label for="height">Height:</label>
-                <input type="number" id="height-input" name="height" class="grid-dimensions" value=16 min=1 max=100>
+                <input type="number" inputmode="numeric" id="height-input" pattern="[0-9]*" name="height" class="grid-dimensions" value=16 min=1 max=100>
             </div>
             <button id="link-button">Link</button>
             <div id="width-selector" class="selector">
                 <label for="width">Width:</label>
-                <input type="number" id="width-input" name="width" class="grid-dimensions" value=16 min=1 max=100>
+                <input type="number" inputmode="numeric" id="width-input" pattern="[0-9*]" name="width" class="grid-dimensions" value=16 min=1 max=100>
             </div>
             <button id="reset-button">Reset</button>
         </div>

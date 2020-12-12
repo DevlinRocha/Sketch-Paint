@@ -94,6 +94,6 @@ body {
 }
 
 .active {
-    flex: 2;
+    flex: 3;
     border: 3px dashed gray;
 }
