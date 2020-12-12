@@ -27,6 +27,7 @@ body {
     "colors";
     justify-items: center;
     justify-content: center;
+    touch-action: none;
 }
 
 #inputs {

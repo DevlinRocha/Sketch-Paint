@@ -1,5 +1,6 @@
 const container = document.querySelector('#container');
-const inputs = document.querySelectorAll('.grid-dimensions');
+const inputs = document.querySelector('#inputs')
+const gridDimensions = document.querySelectorAll('.grid-dimensions');
 const heightInput = document.querySelector('#height-input');
 const widthInput = document.querySelector('#width-input');
 
@@ -13,19 +14,31 @@ function createGrid(height, width) {
             gridItem.classList.add('pixel')
             gridItem.setAttribute('id', `H${h}W${w}`);
             gridItem.addEventListener('mouseover', draw);
-            gridItem.addEventListener('touch', draw);
+            //gridItem.addEventListener('touch', draw);
+            //gridItem.addEventListener('touchstart', draw);
+            gridItem.addEventListener('touchmove', draw);
+            //gridItem.addEventListener('touchcancel', draw);
+            //gridItem.addEventListener('touchend', draw);
             container.appendChild(gridItem);
         }
     }
 }
 
-function draw() {
+function draw(e) {
+    const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    //console.log(e.changedTouches[0].clientX);
+    //console.log(e.changedTouches[0].clientY);
+    //console.log(inputs.offsetHeight); // Use this!
+    console.log(element);
+    //console.log(this.offsetHeight);
+    //console.log(e);
+    element.style.backgroundColor = `${color}`;
     this.style.backgroundColor = `${color}`;
 }
 
 function link() {
     linkButton.classList.toggle('linked');
-    inputs.forEach((input) => {
+    gridDimensions.forEach((input) => {
         input.classList.toggle('linked');
         if(input.classList.contains('linked')) {
             input.addEventListener('change', changeBoth)
@@ -55,6 +68,8 @@ function changeColor() {
     this.style.backgroundColor = this.dataset.color;
     this.style.flex = 2;
 }
+
+//container.addEventListener('touchmove', draw);
 
 let color = 'black';
 const colorButtons = document.querySelectorAll('.color-button');
