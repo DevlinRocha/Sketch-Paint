@@ -1,5 +1,6 @@
 const container = document.querySelector('#container');
-const inputs = document.querySelectorAll('.grid-dimensions');
+//const inputs = document.querySelector('#inputs');
+const gridDimensions = document.querySelectorAll('.grid-dimensions');
 const heightInput = document.querySelector('#height-input');
 const widthInput = document.querySelector('#width-input');
 
@@ -20,21 +21,25 @@ function createGrid(height, width) {
 }
 
 function draw(e) {
-    const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-    if (element.classList.contains('pixel')) {
-        element.style.backgroundColor = `${color}`;
+    if (e.type === 'mouseover') {
+        this.style.backgroundColor = `${color}`;
     }
-    this.style.backgroundColor = `${color}`;
+    if (e.type === 'touchmove') {
+        const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        if (element.classList.contains('pixel')) {
+            element.style.backgroundColor = `${color}`;
+        }
+    }
 }
 
 function link() {
     linkButton.classList.toggle('linked');
-    inputs.forEach((input) => {
-        input.classList.toggle('linked');
-        if(input.classList.contains('linked')) {
-            input.addEventListener('change', changeBoth)
+    gridDimensions.forEach((dimension) => {
+        dimension.classList.toggle('linked');
+        if(dimension.classList.contains('linked')) {
+            dimension.addEventListener('change', changeBoth)
         } else {
-            input.removeEventListener('change', changeBoth)
+            dimension.removeEventListener('change', changeBoth)
         }
     })
 };
