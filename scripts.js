@@ -8,7 +8,7 @@ const customButton = document.querySelector('#custom-button');
 //const openClass = document.querySelectorAll('.open');
 gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
 let gridSize = gridSizeInput.value;
-let color = 'black';
+let color = '#000000';
 
 // FUNCTIONS:
 function createGrid(gridSize) {
@@ -20,6 +20,7 @@ function createGrid(gridSize) {
             let pixel = document.createElement('div');
             pixel.classList.add('pixel')
             pixel.setAttribute('id', `H${h}W${w}`);
+            pixel.setAttribute('data-opacity', 0.1);
             pixel.addEventListener('mouseover', draw);
             pixel.addEventListener('dblclick', paintBucket);
             container.appendChild(pixel);
@@ -28,22 +29,35 @@ function createGrid(gridSize) {
 }
 
 function draw(e) {
+    const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
         this.style.backgroundColor = `${color}`;
+        if (doubleClass) {
+            let opacity = Number(this.dataset.opacity);
+            this.style.opacity = opacity;
+            opacity += 0.1;
+            this.dataset.opacity = opacity;
+        } else {
+            this.style.opacity = 1;
+        }
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-        if (element.classList.contains('pixel')) {
-            element.style.backgroundColor = `${color}`;
+        if (doubleClass) {
+            let opacity = Number(element.dataset.opacity);
+            element.style.opacity = opacity;
+            opacity += 0.1;
+            element.dataset.opacity = opacity;
+        } else {
+            if (element.classList.contains('pixel')) {
+                element.style.backgroundColor = `${color}`;
+            }
         }
     }
 }
 
 function paintBucket() {
-    const doubleClass = document.querySelector('.double');
     const pixels = document.querySelectorAll('.pixel');
-    if (doubleClass) {
-        pixels.forEach((pixel) => pixel.style.backgroundColor = color);
-    }
+    pixels.forEach((pixel) => pixel.style.backgroundColor = color);
 }
 
 function clear() {
@@ -61,11 +75,13 @@ function reset() {
 
 function changeColor() {
     color = this.dataset.color;
+    colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
     colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
     colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
+    colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
+    this.removeEventListener('click', changeColor);
     this.classList.add('active');
-    const activeClass = document.querySelector('.active');
-    activeClass.addEventListener('dblclick', toggleDouble);
+    this.addEventListener('click', toggleDouble);
 }
 
 function customColor() {
@@ -75,7 +91,7 @@ function customColor() {
 
 function toggleDouble() {
     if (this.classList.contains('active')) {
-        this.classList.add('double');
+        this.classList.toggle('double');
         const doubleClass = document.querySelector('.double');
     }
 }
@@ -87,6 +103,7 @@ gridSizeInput.addEventListener('input', clear);
 gridSizeInput.addEventListener('change', reset);
 resetButton.addEventListener('click', reset);
 container.addEventListener('touchmove', draw);
+container.addEventListener('dblclick', paintBucket);
 colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
 colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = colorButton.dataset.color);
 customButton.addEventListener('input', customColor);

@@ -104,11 +104,15 @@ body {
     height: 100%;
 }
 
+.color-button:hover {
+    border: 1px dashed cyan;
+}
+
 .active {
     flex: 3;
-    border: 3px dashed cyan;
+    border: 3px solid cyan !important;
 }
 
 .double {
-    border: 3px solid lime;
+    border: 3px dotted cyan !important;
 }
