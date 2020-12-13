@@ -88,32 +88,3 @@ resetButton.addEventListener('click', reset);
 let height = heightInput.value;
 let width = widthInput.value;
 createGrid(height, width);
-
-
-
-const versionNumber = document.querySelector('#version-number');
-const html = document.querySelector('html');
-const main = document.querySelector('#main');
-
-const vh = getComputedStyle(document.body).getPropertyValue('--viewport-height');
-const vw = getComputedStyle(document.body).getPropertyValue('--viewport-width');
-
-console.log(vh);
-console.log(vw);
-
-console.log(window.innerHeight);
-console.log(html.clientHeight);
-
-function resize() {
-    const size = main.getBoundingClientRect();
-    console.log(size.height);
-    main.style.height = size.height + 'px';
-    main.style.width = size.width + 'px';
-    main.style.inner
-    console.log(main.style.height);
-    window.resizeTo(size.width, size.height);
-}
-
-versionNumber.textContent = main.getBoundingClientRect().height + 'px!';
-
-resize();
