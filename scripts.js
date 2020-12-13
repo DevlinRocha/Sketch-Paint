@@ -53,7 +53,7 @@ function draw(e) {
             if (doubleClass) {
                 let opacity = Number(element.dataset.opacity);
                 element.style.opacity = opacity;
-                if (this.dataset.color === color) {
+                if (element.dataset.color === color) {
                     element.style.opacity = opacity += 0.1;
                 }
             } else {
