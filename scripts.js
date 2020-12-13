@@ -42,14 +42,14 @@ function draw(e) {
         }
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-        if (doubleClass) {
-            let opacity = Number(element.dataset.opacity);
-            element.style.opacity = opacity;
-            opacity += 0.1;
-            element.dataset.opacity = opacity;
-        } else {
-            if (element.classList.contains('pixel')) {
-                element.style.backgroundColor = `${color}`;
+        if (element.classList.contains('pixel')) {
+            element.style.opacity = 1;
+            element.style.backgroundColor = `${color}`;
+            if (doubleClass) {
+                let opacity = Number(element.dataset.opacity);
+                element.style.opacity = opacity;
+                opacity += 0.1;
+                element.dataset.opacity = opacity;
             }
         }
     }
