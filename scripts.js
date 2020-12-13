@@ -104,8 +104,14 @@ console.log(vw);
 console.log(window.innerHeight);
 console.log(html.clientHeight);
 
-main.style.height = html.clientHeight;
-main.style.minHeight = html.clientHeight;
-main.style.maxHeight = html.clientHeight;
+function resize() {
+    const size = main.getBoundingClientRect();
+    console.log(size.height);
+    main.style.height = size.height + 'px';
+    main.style.width = size.width + 'px';
+    console.log(main.style.height);
+}
 
 versionNumber.textContent = html.clientHeight;
+
+resize();
