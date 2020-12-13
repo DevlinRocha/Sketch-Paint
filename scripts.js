@@ -32,6 +32,9 @@ function draw(e) {
     const activeClass = document.querySelector('.active');
     const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
+        if (this.dataset.color !== color) {
+            this.dataset.opacity = 0.1;
+        }
         this.setAttribute('data-color', activeClass.dataset.color);
         this.style.backgroundColor = `${color}`;
         this.style.opacity = 1;
@@ -46,6 +49,9 @@ function draw(e) {
         }
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        if (element.dataset.color !== color) {
+            element.dataset.opacity = 0.1;
+        }
         if (element.classList.contains('pixel')) {
             element.setAttribute('data-color', activeClass.dataset.color);
             element.style.backgroundColor = `${color}`;
