@@ -1,3 +1,8 @@
+:root {
+    --viewport-height: 100vh;
+    --viewport-width: 100vw;
+}
+
 * {
     box-sizing: border-box;
 }

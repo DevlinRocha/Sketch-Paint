@@ -14,7 +14,7 @@ function createGrid(height, width) {
             gridItem.classList.add('pixel')
             gridItem.setAttribute('id', `H${h}W${w}`);
             gridItem.addEventListener('mouseover', draw);
-            gridItem.addEventListener('touchmove', draw);
+            //gridItem.addEventListener('touchmove', draw);
             container.appendChild(gridItem);
         }
     }
@@ -22,6 +22,11 @@ function createGrid(height, width) {
 
 function draw(e) {
     if (e.type === 'mouseover') {
+        //const element = document.elementFromPoint(e.clientX, e.clientY);
+        //if (element.classList.contains('pixel')) {
+        //    element.style.backgroundColor = `${color}`;
+        //}
+        //console.log(e);
         this.style.backgroundColor = `${color}`;
     }
     if (e.type === 'touchmove') {
@@ -63,6 +68,9 @@ function changeColor() {
     this.classList.add('active');
 }
 
+container.addEventListener('touchmove', draw);
+//container.addEventListener('mouseover', draw);
+
 let color = 'black';
 const colorButtons = document.querySelectorAll('.color-button');
 colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
@@ -80,3 +88,24 @@ resetButton.addEventListener('click', reset);
 let height = heightInput.value;
 let width = widthInput.value;
 createGrid(height, width);
+
+
+
+const versionNumber = document.querySelector('#version-number');
+const html = document.querySelector('html');
+const main = document.querySelector('#main');
+
+const vh = getComputedStyle(document.body).getPropertyValue('--viewport-height');
+const vw = getComputedStyle(document.body).getPropertyValue('--viewport-width');
+
+console.log(vh);
+console.log(vw);
+
+console.log(window.innerHeight);
+console.log(html.clientHeight);
+
+main.style.height = html.clientHeight;
+main.style.minHeight = html.clientHeight;
+main.style.maxHeight = html.clientHeight;
+
+versionNumber.textContent = html.clientHeight;
