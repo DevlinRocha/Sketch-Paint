@@ -112,6 +112,6 @@ function resize() {
     console.log(main.style.height);
 }
 
-versionNumber.textContent = html.clientHeight;
+versionNumber.textContent = main.getBoundingClientRect().height + 'px';
 
 resize();
