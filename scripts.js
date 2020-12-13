@@ -109,9 +109,11 @@ function resize() {
     console.log(size.height);
     main.style.height = size.height + 'px';
     main.style.width = size.width + 'px';
+    main.style.inner
     console.log(main.style.height);
+    window.resizeTo(size.width, size.height);
 }
 
-versionNumber.textContent = main.getBoundingClientRect().height + 'px';
+versionNumber.textContent = main.getBoundingClientRect().height + 'px!';
 
 resize();
