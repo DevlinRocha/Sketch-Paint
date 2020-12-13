@@ -5,19 +5,14 @@
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Etch-A-Sketch</title>
+    <title>Sketch Paint!</title>
 </head>
 <body>
     <main id="main">
-        <div id="inputs">
-            <div id="height-selector" class="selector">
-                <label for="height" class="label">Height:</label>
-                <input type="number" inputmode="numeric" id="height-input" pattern="[0-9]*" name="height" class="grid-dimensions" value=16 min=1 max=100>
-            </div>
-            <button id="link-button">Link</button>
-            <div id="width-selector" class="selector">
-                <label for="width" class="label">Width:</label>
-                <input type="number" inputmode="numeric" id="width-input" pattern="[0-9*]" name="width" class="grid-dimensions" value=16 min=1 max=100>
+        <div id="toolkit">
+            <div id="grid-size">
+                <label id="grid-size-label" for="grid-size" class="label">Grid size:</label>
+                <input id="grid-size-input" type="range" name="grid-size" value=16 min=1 max=100>
             </div>
             <button id="reset-button">Reset</button>
         </div>

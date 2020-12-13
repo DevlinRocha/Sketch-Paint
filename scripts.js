@@ -1,14 +1,22 @@
+// DECLARATIONS:
+const gridSizeLabel = document.querySelector('#grid-size-label');
+const gridSizeInput = document.querySelector('#grid-size-input');
+const resetButton = document.querySelector('#reset-button');
 const container = document.querySelector('#container');
-const gridDimensions = document.querySelectorAll('.grid-dimensions');
-const heightInput = document.querySelector('#height-input');
-const widthInput = document.querySelector('#width-input');
+const colorButtons = document.querySelectorAll('.color-button');
+const customButton = document.querySelector('#custom-button');
+//const openClass = document.querySelectorAll('.open');
+gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
+let gridSize = gridSizeInput.value;
+let color = 'black';
 
-function createGrid(height, width) {
-    container.style.gridTemplateRows = `repeat(${height}, 1fr)`;
-    container.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+// FUNCTIONS:
+function createGrid(gridSize) {
+    container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
 
-    for (let h = 1; h <= height; h++) {
-        for (let w = 1; w <= width; w++) {
+    for (let h = 1; h <= gridSize; h++) {
+        for (let w = 1; w <= gridSize; w++) {
             let pixel = document.createElement('div');
             pixel.classList.add('pixel')
             pixel.setAttribute('id', `H${h}W${w}`);
@@ -38,29 +46,17 @@ function paintBucket() {
     }
 }
 
-function link() {
-    linkButton.classList.toggle('linked');
-    gridDimensions.forEach((dimension) => {
-        dimension.classList.toggle('linked');
-        if (dimension.classList.contains('linked')) {
-            dimension.addEventListener('input', changeBoth)
-        } else {
-            dimension.removeEventListener('input', changeBoth)
-        }
-    })
-};
+function clear() {
+    gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
+    const pixels = document.querySelectorAll('.pixel');
+    pixels.forEach((pixel) => pixel.style.backgroundColor = '');
+}
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
-    pixels.forEach((pixel) => pixel.remove());
-    height = heightInput.value;
-    width = widthInput.value;
-    createGrid(height, width);
-}
-
-function changeBoth(e) {
-    heightInput.value = this.value;
-    widthInput.value = this.value;
+    pixels.forEach((pixel) => pixel.style.backgroundColor = '');
+    gridSize = gridSizeInput.value;
+    createGrid(gridSize);
 }
 
 function changeColor() {
@@ -84,28 +80,14 @@ function toggleDouble() {
     }
 }
 
-container.addEventListener('touchmove', draw);
+createGrid(gridSize);
 
-let color = 'black';
-const colorButtons = document.querySelectorAll('.color-button');
+// EVENT LISTENERS:
+gridSizeInput.addEventListener('input', clear);
+gridSizeInput.addEventListener('change', reset);
+resetButton.addEventListener('click', reset);
+container.addEventListener('touchmove', draw);
 colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
 colorButtons.forEach((colorButton) => colorButton.style.backgroundColor = colorButton.dataset.color);
-const customButton = document.querySelector('#custom-button');
 customButton.addEventListener('input', customColor);
-
-const linkButton = document.querySelector('#link-button');
-linkButton.addEventListener('click', link);
-
-const linked = document.querySelectorAll('.linked');
-linked.forEach((link) => link.addEventListener('input', changeBoth))
-
-const resetButton = document.querySelector('#reset-button');
-resetButton.addEventListener('click', reset);
-
-let height = heightInput.value;
-let width = widthInput.value;
-createGrid(height, width);
-
-
-const openClass = document.querySelectorAll('.open');
 //colorButtons.forEach((activeElement) => activeElement.addEventListener('transitionend', toggleOpen));
