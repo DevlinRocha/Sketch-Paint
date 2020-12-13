@@ -29,27 +29,35 @@ function createGrid(gridSize) {
 }
 
 function draw(e) {
+    const activeClass = document.querySelector('.active');
     const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
+        this.setAttribute('data-color', activeClass.dataset.color);
         this.style.backgroundColor = `${color}`;
+        this.style.opacity = 1;
         if (doubleClass) {
             let opacity = Number(this.dataset.opacity);
             this.style.opacity = opacity;
-            opacity += 0.1;
-            this.dataset.opacity = opacity;
+            if (this.dataset.color === color) {
+                this.dataset.opacity = opacity += 0.1;
+            }
         } else {
-            this.style.opacity = 1;
+            this.dataset.opacity = 1;
         }
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         if (element.classList.contains('pixel')) {
-            element.style.opacity = 1;
+            element.setAttribute('data-color', activeClass.dataset.color);
             element.style.backgroundColor = `${color}`;
+            element.style.opacity = 1;
             if (doubleClass) {
                 let opacity = Number(element.dataset.opacity);
                 element.style.opacity = opacity;
-                opacity += 0.1;
-                element.dataset.opacity = opacity;
+                if (this.dataset.color === color) {
+                    element.style.opacity = opacity += 0.1;
+                }
+            } else {
+                element.dataset.opacity = 1;
             }
         }
     }
