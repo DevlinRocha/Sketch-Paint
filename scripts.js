@@ -73,9 +73,17 @@ function draw(e) {
                     element.dataset.opacity = opacity;
                     element.style.opacity = opacity;
                 } else {
-                    opacity += 0.1;
-                    element.style.opacity = opacity;
-                    element.dataset.opacity = opacity;
+                    if (element.dataset.color !== color && element.dataset.opacity <0.5) {
+                        element.style.backgroundColor = color;
+                        element.setAttribute('data-color', activeClass.dataset.color);
+                        opacity = 0.1;
+                        element.dataset.opacity = opacity;
+                        element.style.opacity = opacity;
+                    } else {
+                        opacity += 0.1;
+                        element.style.opacity = opacity;
+                        element.dataset.opacity = opacity;
+                    }
                 }
             } else {
                 element.style.backgroundColor = color;
