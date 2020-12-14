@@ -73,7 +73,7 @@ function draw(e) {
                     element.dataset.opacity = opacity;
                     element.style.opacity = opacity;
                 } else {
-                    if (element.dataset.color !== color && element.dataset.opacity <0.5) {
+                    if (element.dataset.color !== color && element.dataset.opacity < 0.5) {
                         element.style.backgroundColor = color;
                         element.setAttribute('data-color', activeClass.dataset.color);
                         opacity = 0.1;
@@ -99,26 +99,7 @@ function draw(e) {
         }
     }
 }
-/*
-            if (element.dataset.color !== color) {
-                element.dataset.opacity = 0.1;
-            } else {
-                element.dataset.opacity = 1;
-            }
-            element.setAttribute('data-color', activeClass.dataset.color);
-            element.style.backgroundColor = `${color}`;
-            element.style.opacity = 1;
-            if (doubleClass) {
-                let opacity = Number(element.dataset.opacity);
-                element.style.opacity = opacity;
-                if (element.dataset.color === color) {
-                    element.style.opacity = opacity += 0.1;
-                }
-            }
-        }
-    }
-}
-*/
+
 function paintBucket() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.style.opacity = 1);
