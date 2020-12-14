@@ -38,43 +38,42 @@ function createGrid(gridSize) {
 function draw(e) {
     e.stopPropagation();
     const doubleClass = document.querySelector('.double');
+    const currentlyActive = document.querySelector('.active');
+    if (currentlyActive.dataset.rainbow === 'true') {
+        rainbowColor();
+        //container.dispatchEvent(drawEvent);
+    }
     if (e.type === 'mouseover') {
-        if (typeof color === 'object') {
-            const colorArray = color;
-            color = colorArray;
-        } else {
-            if (doubleClass) {
-                let opacity = Number(this.dataset.opacity);
-                if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
-                    opacity -= 0.1;
+        if (doubleClass) {
+            let opacity = Number(this.dataset.opacity);
+            if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
+                opacity -= 0.1;
+                this.dataset.opacity = opacity;
+                this.style.opacity = opacity;
+            } else if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
+                    this.style.backgroundColor = color;
+                    console.log(activeClass.dataset.color);
+                    this.setAttribute('data-color', currentlyActive.dataset.color);
+                    opacity = 0.1;
                     this.dataset.opacity = opacity;
                     this.style.opacity = opacity;
-                } else {
-                    if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
-                        this.style.backgroundColor = color;
-                        this.setAttribute('data-color', activeClass.dataset.color);
-                        opacity = 0.1;
-                        this.dataset.opacity = opacity;
-                        this.style.opacity = opacity;
-                    } else {
-                        opacity += 0.2;
-                        this.style.opacity = opacity;
-                        this.dataset.opacity = opacity;
-                    }
-                }
             } else {
-                this.style.backgroundColor = color;
-                this.setAttribute('data-color', activeClass.dataset.color);
-                if (color === '#FFFFFF') {
-                    this.style.opacity = 1;
-                    this.dataset.opacity = 0.1;
-                } else {
-                    this.style.opacity = 1;
-                    this.dataset.opacity = 1;
-                }
+                opacity += 0.2;
+                this.style.opacity = opacity;
+                this.dataset.opacity = opacity;
             }
-        }
-        
+        } else {
+            console.log(activeClass.dataset.color);
+            this.style.backgroundColor = color;
+            this.setAttribute('data-color', currentlyActive.dataset.color);
+            if (color === '#FFFFFF') {
+                this.style.opacity = 1;
+                this.dataset.opacity = 0.1;
+            } else {
+                this.style.opacity = 1;
+                this.dataset.opacity = 1;
+            }
+        } 
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         if (element.classList.contains('pixel')) {
@@ -87,7 +86,7 @@ function draw(e) {
                 } else {
                     if (element.dataset.color !== color && element.dataset.opacity < 0.5) {
                         element.style.backgroundColor = color;
-                        element.setAttribute('data-color', activeClass.dataset.color);
+                        element.setAttribute('data-color', currentlyActive.dataset.color);
                         opacity = 0.1;
                         element.dataset.opacity = opacity;
                         element.style.opacity = opacity;
@@ -99,7 +98,7 @@ function draw(e) {
                 }
             } else {
                 element.style.backgroundColor = color;
-                element.setAttribute('data-color', activeClass.dataset.color);
+                element.setAttribute('data-color', currentlyActive.dataset.color);
                 if (color === '#FFFFFF') {
                     element.style.opacity = 1;
                     element.dataset.opacity = 0.1;
@@ -109,10 +108,6 @@ function draw(e) {
                 }
             }
         }
-    }
-    const currentlyActive = document.querySelector('.active');
-    if (currentlyActive.dataset.color === 'rainbow') {
-        container.dispatchEvent(drawEvent);
     }
 }
 
@@ -155,9 +150,11 @@ function customColor() {
 }
 
 function rainbowColor() {
+    const currentlyActive = document.querySelector('.active');
     color = colorArray[rainbowIndex];
+    currentlyActive.dataset.color = color;
     rainbowIndex++
-    if (rainbowIndex > colorArray.length) {
+    if (rainbowIndex >= colorArray.length) {
         rainbowIndex = 0;
     }
 }
