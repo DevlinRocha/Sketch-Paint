@@ -32,27 +32,71 @@ function draw(e) {
     const activeClass = document.querySelector('.active');
     const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
-        if (this.dataset.color !== color) {
-            this.dataset.opacity = 0.1;
-        }
-        this.setAttribute('data-color', activeClass.dataset.color);
-        this.style.backgroundColor = `${color}`;
-        this.style.opacity = 1;
         if (doubleClass) {
             let opacity = Number(this.dataset.opacity);
-            this.style.opacity = opacity;
-            if (this.dataset.color === color) {
-                this.dataset.opacity = opacity += 0.1;
+            if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
+                opacity -= 0.1;
+                this.dataset.opacity = opacity;
+                this.style.opacity = opacity;
+            } else {
+                if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
+                    this.style.backgroundColor = color;
+                    this.setAttribute('data-color', activeClass.dataset.color);
+                    opacity = 0.1;
+                    this.dataset.opacity = opacity;
+                    this.style.opacity = opacity;
+                } else {
+                    opacity += 0.1;
+                    this.style.opacity = opacity;
+                    this.dataset.opacity = opacity;
+                }
             }
         } else {
-            this.dataset.opacity = 1;
+            this.style.backgroundColor = color;
+            this.setAttribute('data-color', activeClass.dataset.color);
+            if (color === '#FFFFFF') {
+                this.style.opacity = 1;
+                this.dataset.opacity = 0.1;
+            } else {
+                this.style.opacity = 1;
+                this.dataset.opacity = 1;
+            }
         }
+
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-        if (element.dataset.color !== color) {
-            element.dataset.opacity = 0.1;
-        }
         if (element.classList.contains('pixel')) {
+            if (doubleClass) {
+                opacity = Number(element.dataset.opacity);
+                if (color === '#FFFFFF' && element.dataset.opacity > 0.1) {
+                    opacity -= 0.1;
+                    element.dataset.opacity = opacity;
+                    element.style.opacity = opacity;
+                } else {
+                    opacity += 0.1;
+                    element.style.opacity = opacity;
+                    element.dataset.opacity = opacity;
+                }
+            } else {
+                element.style.backgroundColor = color;
+                element.setAttribute('data-color', activeClass.dataset.color);
+                if (color === '#FFFFFF') {
+                    element.style.opacity = 1;
+                    element.dataset.opacity = 0.1;
+                } else {
+                    element.style.opacity = 1;
+                    element.dataset.opacity = 1;
+                }
+            }
+        }
+    }
+}
+/*
+            if (element.dataset.color !== color) {
+                element.dataset.opacity = 0.1;
+            } else {
+                element.dataset.opacity = 1;
+            }
             element.setAttribute('data-color', activeClass.dataset.color);
             element.style.backgroundColor = `${color}`;
             element.style.opacity = 1;
@@ -62,13 +106,11 @@ function draw(e) {
                 if (element.dataset.color === color) {
                     element.style.opacity = opacity += 0.1;
                 }
-            } else {
-                element.dataset.opacity = 1;
             }
         }
     }
 }
-
+*/
 function paintBucket() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.style.backgroundColor = color);
@@ -93,8 +135,8 @@ function changeColor() {
     colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
     colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
     colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
-    this.removeEventListener('click', changeColor);
     this.classList.add('active');
+    this.removeEventListener('click', changeColor);
     this.addEventListener('click', toggleDouble);
 }
 
@@ -106,7 +148,6 @@ function customColor() {
 function toggleDouble() {
     if (this.classList.contains('active')) {
         this.classList.toggle('double');
-        const doubleClass = document.querySelector('.double');
     }
 }
 
