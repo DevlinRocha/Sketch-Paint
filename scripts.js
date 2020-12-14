@@ -67,7 +67,7 @@ function draw(e) {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         if (element.classList.contains('pixel')) {
             if (doubleClass) {
-                opacity = Number(element.dataset.opacity);
+                let opacity = Number(element.dataset.opacity);
                 if (color === '#FFFFFF' && element.dataset.opacity > 0.1) {
                     opacity -= 0.1;
                     element.dataset.opacity = opacity;
@@ -113,6 +113,7 @@ function draw(e) {
 */
 function paintBucket() {
     const pixels = document.querySelectorAll('.pixel');
+    pixels.forEach((pixel) => pixel.style.opacity = 1);
     pixels.forEach((pixel) => pixel.style.backgroundColor = color);
 }
 
