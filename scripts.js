@@ -121,7 +121,10 @@ function clear() {
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
-    pixels.forEach((pixel) => pixel.style.backgroundColor = '');
+    const activeClass = document.querySelector('.active');
+    pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF');
+    pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
+    pixels.forEach((pixel) => pixel.setAttribute('data-color', '#FFFFFF'));
     gridSize = gridSizeInput.value;
     createGrid(gridSize);
 }
