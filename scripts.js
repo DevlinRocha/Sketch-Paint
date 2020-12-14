@@ -1,8 +1,10 @@
 // DECLARATIONS:
+const secretButton = document.querySelector('#secret-button');
 const gridSizeLabel = document.querySelector('#grid-size-label');
 const gridSizeInput = document.querySelector('#grid-size-input');
 const resetButton = document.querySelector('#reset-button');
 const container = document.querySelector('#container');
+const rainbow = document.querySelectorAll('.rainbow');
 const colorButtons = document.querySelectorAll('.color-button');
 const customButton = document.querySelector('#custom-button');
 //const openClass = document.querySelectorAll('.open');
@@ -32,34 +34,39 @@ function draw(e) {
     const activeClass = document.querySelector('.active');
     const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
-        if (doubleClass) {
-            let opacity = Number(this.dataset.opacity);
-            if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
-                opacity -= 0.1;
-                this.dataset.opacity = opacity;
-                this.style.opacity = opacity;
-            } else {
-                if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
-                    this.style.backgroundColor = color;
-                    this.setAttribute('data-color', activeClass.dataset.color);
-                    opacity = 0.1;
+        if (typeof color === 'object') {
+            const colorArray = color;
+            color = colorArray;
+        } else {
+            if (doubleClass) {
+                let opacity = Number(this.dataset.opacity);
+                if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
+                    opacity -= 0.1;
                     this.dataset.opacity = opacity;
                     this.style.opacity = opacity;
                 } else {
-                    opacity += 0.1;
-                    this.style.opacity = opacity;
-                    this.dataset.opacity = opacity;
+                    if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
+                        this.style.backgroundColor = color;
+                        this.setAttribute('data-color', activeClass.dataset.color);
+                        opacity = 0.1;
+                        this.dataset.opacity = opacity;
+                        this.style.opacity = opacity;
+                    } else {
+                        opacity += 0.2;
+                        this.style.opacity = opacity;
+                        this.dataset.opacity = opacity;
+                    }
                 }
-            }
-        } else {
-            this.style.backgroundColor = color;
-            this.setAttribute('data-color', activeClass.dataset.color);
-            if (color === '#FFFFFF') {
-                this.style.opacity = 1;
-                this.dataset.opacity = 0.1;
             } else {
-                this.style.opacity = 1;
-                this.dataset.opacity = 1;
+                this.style.backgroundColor = color;
+                this.setAttribute('data-color', activeClass.dataset.color);
+                if (color === '#FFFFFF') {
+                    this.style.opacity = 1;
+                    this.dataset.opacity = 0.1;
+                } else {
+                    this.style.opacity = 1;
+                    this.dataset.opacity = 1;
+                }
             }
         }
 
@@ -80,7 +87,7 @@ function draw(e) {
                         element.dataset.opacity = opacity;
                         element.style.opacity = opacity;
                     } else {
-                        opacity += 0.1;
+                        opacity += 0.2;
                         element.style.opacity = opacity;
                         element.dataset.opacity = opacity;
                     }
@@ -120,14 +127,20 @@ function reset() {
 }
 
 function changeColor() {
-    color = this.dataset.color;
-    colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
-    colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
-    colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
-    colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
-    this.classList.add('active');
-    this.removeEventListener('click', changeColor);
-    this.addEventListener('click', toggleDouble);
+    if (this.dataset.color === 'rainbow') {
+        let colors = [];
+        rainbow.forEach((color) => colors.push(color.dataset.color));
+        color = colors;
+    } else {
+        color = this.dataset.color;
+        colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
+        colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
+        colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
+        colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
+        this.classList.add('active');
+        this.removeEventListener('click', changeColor);
+        this.addEventListener('click', toggleDouble);
+    }
 }
 
 function customColor() {
@@ -143,7 +156,12 @@ function toggleDouble() {
 
 createGrid(gridSize);
 
+// CUSTOM EVENTS:
+let event = new Event('draw');
+secretButton.dispatchEvent(event);
+
 // EVENT LISTENERS:
+secretButton.addEventListener('click', changeColor);
 gridSizeInput.addEventListener('input', clear);
 gridSizeInput.addEventListener('change', reset);
 resetButton.addEventListener('click', reset);

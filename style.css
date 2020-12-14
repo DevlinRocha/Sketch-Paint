@@ -50,6 +50,23 @@ body {
     background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple);
 }
 
+#secret-button {
+    background-clip: padding-box;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#secret-button-text {
+    flex: 2;
+    height: 100%;
+    width: 100%;
+    text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white, 0 0 1px white;
+    color: black;
+    font-size: 17px;
+}
+
 #grid-size {
     display: flex;
     flex-direction: row;
@@ -58,10 +75,12 @@ body {
     max-height: 100%;
     justify-content: space-around;
     align-items: center;
+    font-size: 13px;
 }
 
 .label {
-    background-color: white;
+    text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white, 0 0 1px white;
+    color: black;
 }
 
 #container {
@@ -94,10 +113,14 @@ body {
 }
 
 .color-button {
-    border: 1px solid gray;
+    border: none;
     transition: all 0.5s;
     flex: 1;
     padding: 0;
+}
+
+.rainbow {
+    border: 1px solid gray;
 }
 
 #custom-button {

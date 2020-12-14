@@ -10,6 +10,7 @@
 <body>
     <main id="main">
         <div id="toolkit">
+            <button id="secret-button" class="color-button" data-color="rainbow"><span id="secret-button-text">Sketch Paint!</span></button>
             <div id="grid-size">
                 <label id="grid-size-label" for="grid-size" class="label">Grid size:</label>
                 <input id="grid-size-input" type="range" name="grid-size" value=16 min=1 max=100>
@@ -19,12 +20,12 @@
         <div id="container"></div>
         <div id="colors">
             <button id="black-button" class="color-button active" data-color="#000000"></button>
-            <button id="red-button" class="color-button" data-color="#FF0000"></button>
-            <button id="orange-button" class="color-button" data-color="#FFA500"></button>
-            <button id="yellow-button" class="color-button" data-color="#FFFF00"></button>
-            <button id="green-button" class="color-button" data-color="#008000"></button>
-            <button id="blue-button" class="color-button" data-color="#0000FF"></button>
-            <button id="purple-button" class="color-button" data-color="#800080"></button>
+            <button id="red-button" class="color-button rainbow" data-color="#FF0000"></button>
+            <button id="orange-button" class="color-button rainbow" data-color="#FFA500"></button>
+            <button id="yellow-button" class="color-button rainbow" data-color="#FFFF00"></button>
+            <button id="green-button" class="color-button rainbow" data-color="#008000"></button>
+            <button id="blue-button" class="color-button rainbow" data-color="#0000FF"></button>
+            <button id="purple-button" class="color-button rainbow" data-color="#800080"></button>
             <button id="white-button" class="color-button" data-color="#FFFFFF"></button>
             <input id="custom-button" class="color-button" data-color="#696969" type="color" value="#696969">
         </div>
