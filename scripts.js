@@ -87,7 +87,7 @@ function draw(e) {
                         element.dataset.opacity = opacity;
                         element.style.opacity = opacity;
                     } else {
-                        opacity += 0.2;
+                        opacity += 0.1;
                         element.style.opacity = opacity;
                         element.dataset.opacity = opacity;
                     }
