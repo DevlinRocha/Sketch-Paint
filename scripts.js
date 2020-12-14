@@ -7,16 +7,21 @@ const container = document.querySelector('#container');
 const rainbow = document.querySelectorAll('.rainbow');
 const colorButtons = document.querySelectorAll('.color-button');
 const customButton = document.querySelector('#custom-button');
+const activeClass = document.querySelector('.active');
 //const openClass = document.querySelectorAll('.open');
 gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
+
 let gridSize = gridSizeInput.value;
-let color = '#000000';
+let color = activeClass.dataset.color;
+const colorArray = [];
+rainbow.forEach((color) => colorArray.push(color.dataset.color));
+let rainbowIndex = 0;
 
 // FUNCTIONS:
 function createGrid(gridSize) {
     container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
     container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-
+    
     for (let h = 1; h <= gridSize; h++) {
         for (let w = 1; w <= gridSize; w++) {
             let pixel = document.createElement('div');
@@ -31,7 +36,7 @@ function createGrid(gridSize) {
 }
 
 function draw(e) {
-    const activeClass = document.querySelector('.active');
+    e.stopPropagation();
     const doubleClass = document.querySelector('.double');
     if (e.type === 'mouseover') {
         if (typeof color === 'object') {
@@ -69,7 +74,7 @@ function draw(e) {
                 }
             }
         }
-
+        
     } else if (e.type === 'touchmove') {
         const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         if (element.classList.contains('pixel')) {
@@ -105,6 +110,10 @@ function draw(e) {
             }
         }
     }
+    const currentlyActive = document.querySelector('.active');
+    if (currentlyActive.dataset.color === 'rainbow') {
+        container.dispatchEvent(drawEvent);
+    }
 }
 
 function paintBucket() {
@@ -121,7 +130,6 @@ function clear() {
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
-    const activeClass = document.querySelector('.active');
     pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF');
     pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
     pixels.forEach((pixel) => pixel.setAttribute('data-color', '#FFFFFF'));
@@ -130,25 +138,28 @@ function reset() {
 }
 
 function changeColor() {
-    if (this.dataset.color === 'rainbow') {
-        let colors = [];
-        rainbow.forEach((color) => colors.push(color.dataset.color));
-        color = colors;
-    } else {
-        color = this.dataset.color;
-        colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
-        colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
-        colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
-        colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
-        this.classList.add('active');
-        this.removeEventListener('click', changeColor);
-        this.addEventListener('click', toggleDouble);
-    }
+    color = this.dataset.color;
+    colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
+    colorButtons.forEach((colorButton) => colorButton.classList.remove('active'));
+    colorButtons.forEach((colorButton) => colorButton.classList.remove('double'));
+    colorButtons.forEach((colorButton) => colorButton.removeEventListener('click', toggleDouble));
+    this.classList.add('active');
+    this.removeEventListener('click', changeColor);
+    this.addEventListener('click', toggleDouble);
 }
+
 
 function customColor() {
     this.dataset.color = this.value;
     color = this.dataset.color;
+}
+
+function rainbowColor() {
+    color = colorArray[rainbowIndex];
+    rainbowIndex++
+    if (rainbowIndex > colorArray.length) {
+        rainbowIndex = 0;
+    }
 }
 
 function toggleDouble() {
@@ -160,8 +171,8 @@ function toggleDouble() {
 createGrid(gridSize);
 
 // CUSTOM EVENTS:
-let event = new Event('draw');
-secretButton.dispatchEvent(event);
+let drawEvent = new Event('draw');
+container.addEventListener('draw', rainbowColor);
 
 // EVENT LISTENERS:
 secretButton.addEventListener('click', changeColor);
