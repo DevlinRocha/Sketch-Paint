@@ -41,7 +41,6 @@ function draw(e) {
     const currentlyActive = document.querySelector('.active');
     if (currentlyActive.dataset.rainbow === 'true') {
         rainbowColor();
-        //container.dispatchEvent(drawEvent);
     }
     if (e.type === 'mouseover') {
         if (doubleClass) {
@@ -52,7 +51,6 @@ function draw(e) {
                 this.style.opacity = opacity;
             } else if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
                     this.style.backgroundColor = color;
-                    console.log(activeClass.dataset.color);
                     this.setAttribute('data-color', currentlyActive.dataset.color);
                     opacity = 0.1;
                     this.dataset.opacity = opacity;
@@ -63,7 +61,6 @@ function draw(e) {
                 this.dataset.opacity = opacity;
             }
         } else {
-            console.log(activeClass.dataset.color);
             this.style.backgroundColor = color;
             this.setAttribute('data-color', currentlyActive.dataset.color);
             if (color === '#FFFFFF') {
@@ -166,10 +163,6 @@ function toggleDouble() {
 }
 
 createGrid(gridSize);
-
-// CUSTOM EVENTS:
-let drawEvent = new Event('draw');
-container.addEventListener('draw', rainbowColor);
 
 // EVENT LISTENERS:
 secretButton.addEventListener('click', changeColor);
