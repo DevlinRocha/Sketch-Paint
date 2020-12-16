@@ -27,6 +27,9 @@ function createGrid() {
             let pixel = document.createElement('div');
             pixel.classList.add('pixel')
             //pixel.setAttribute('id', `H${h}W${w}`);
+            pixel.style.backgroundColor = '#FFFFFF';
+            pixel.style.opacity = 0.1;
+            pixel.dataset.color = '#FFFFFF';
             pixel.dataset.opacity = 0.1;
             container.appendChild(pixel);
         }
@@ -125,17 +128,14 @@ function changeGridSizeLabel() {
 function clear() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF')
-    pixels.forEach((pixel) => pixel.style.opacity = 0.1);
-    pixels.forEach((pixel) => pixel.dataset.color = '#FFFFFF');
-    pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
+    setTimeout(() => {
+        pixels.forEach((pixel) => pixel.remove());
+    }, 500);
 };
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF')
-    pixels.forEach((pixel) => pixel.style.opacity = 0.1);
-    pixels.forEach((pixel) => pixel.dataset.color = '#FFFFFF');
-    pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
     pixels.forEach((pixel) => pixel.remove());
     gridSize = gridSizeInput.value;
     createGrid(gridSize);
