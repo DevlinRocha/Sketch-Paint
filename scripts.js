@@ -9,7 +9,7 @@ const colorButtons = document.querySelectorAll('.color-button');
 const customButton = document.querySelector('#custom-button');
 const activeClass = document.querySelector('.active');
 //const openClass = document.querySelectorAll('.open');
-gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
+gridSizeLabel.textContent = `${gridSizeInput.value} x ${gridSizeInput.value}`;
 
 let gridSize = gridSizeInput.value;
 let color = activeClass.dataset.color;
@@ -18,90 +18,95 @@ rainbow.forEach((color) => colorArray.push(color.dataset.color));
 let rainbowIndex = 0;
 
 // FUNCTIONS:
-function createGrid(gridSize) {
+function createGrid() {
+    const pixels = document.querySelectorAll('.pixel');
     container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
     container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-    
     for (let h = 1; h <= gridSize; h++) {
         for (let w = 1; w <= gridSize; w++) {
             let pixel = document.createElement('div');
             pixel.classList.add('pixel')
-            pixel.setAttribute('id', `H${h}W${w}`);
-            pixel.setAttribute('data-opacity', 0.1);
-            pixel.addEventListener('mouseover', draw);
-            pixel.addEventListener('dblclick', paintBucket);
+            //pixel.setAttribute('id', `H${h}W${w}`);
+            pixel.dataset.opacity = 0.1;
             container.appendChild(pixel);
         }
     }
+    gridSizeInput.addEventListener('input', reset, { once: true });
 }
 
+
+
 function draw(e) {
-    e.stopPropagation();
+    //e.stopPropagation();
     const doubleClass = document.querySelector('.double');
     const currentlyActive = document.querySelector('.active');
-    if (currentlyActive.dataset.rainbow === 'true') {
-        rainbowColor();
-    }
-    if (e.type === 'mouseover') {
-        if (doubleClass) {
-            let opacity = Number(this.dataset.opacity);
-            if (color === '#FFFFFF' && this.dataset.opacity > 0.1) {
-                opacity -= 0.1;
-                this.dataset.opacity = opacity;
-                this.style.opacity = opacity;
-            } else if (this.dataset.color !== color && this.dataset.opacity < 0.5) {
-                    this.style.backgroundColor = color;
-                    this.setAttribute('data-color', currentlyActive.dataset.color);
-                    opacity = 0.1;
-                    this.dataset.opacity = opacity;
-                    this.style.opacity = opacity;
-            } else {
-                opacity += 0.2;
-                this.style.opacity = opacity;
-                this.dataset.opacity = opacity;
-            }
-        } else {
-            this.style.backgroundColor = color;
-            this.setAttribute('data-color', currentlyActive.dataset.color);
-            if (color === '#FFFFFF') {
-                this.style.opacity = 1;
-                this.dataset.opacity = 0.1;
-            } else {
-                this.style.opacity = 1;
-                this.dataset.opacity = 1;
-            }
-        } 
-    } else if (e.type === 'touchmove') {
-        const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-        if (element.classList.contains('pixel')) {
+    if (e.target.classList.contains('pixel')) {
+        if (currentlyActive.dataset.rainbow === 'true') {
+            rainbowColor();
+        }
+        if (e.type === 'mouseover') {
             if (doubleClass) {
-                let opacity = Number(element.dataset.opacity);
-                if (color === '#FFFFFF' && element.dataset.opacity > 0.1) {
+                let opacity = Number(e.target.dataset.opacity);
+                if (color === '#FFFFFF' && e.target.dataset.opacity > 0.1) {
                     opacity -= 0.1;
-                    element.dataset.opacity = opacity;
-                    element.style.opacity = opacity;
+                    e.target.dataset.opacity = opacity;
+                    e.target.style.opacity = opacity;
+                } else if (e.target.dataset.color !== color && e.target.dataset.opacity < 0.5) {
+                    e.target.style.backgroundColor = color;
+                    e.target.setAttribute('data-color', currentlyActive.dataset.color);
+                    opacity = 0.1;
+                    e.target.dataset.opacity = opacity;
+                    e.target.style.opacity = opacity;
+                }else if (e.target.dataset.color !== color && e.target.dataset.opacity >= 0.5) {
+                    return;
                 } else {
-                    if (element.dataset.color !== color && element.dataset.opacity < 0.5) {
-                        element.style.backgroundColor = color;
-                        element.setAttribute('data-color', currentlyActive.dataset.color);
-                        opacity = 0.1;
+                    opacity += 0.2;
+                    e.target.style.opacity = opacity;
+                    e.target.dataset.opacity = opacity;
+                }
+            } else {
+                e.target.style.backgroundColor = color;
+                e.target.setAttribute('data-color', currentlyActive.dataset.color);
+                if (color === '#FFFFFF') {
+                    e.target.style.opacity = 1;
+                    e.target.dataset.opacity = 0.1;
+                } else {
+                    e.target.style.opacity = 1;
+                    e.target.dataset.opacity = 1;
+                }
+            }
+        } else if (e.type === 'touchmove') {
+            const element = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+            if (element.classList.contains('pixel')) {
+                if (doubleClass) {
+                    let opacity = Number(element.dataset.opacity);
+                    if (color === '#FFFFFF' && element.dataset.opacity > 0.1) {
+                        opacity -= 0.1;
                         element.dataset.opacity = opacity;
                         element.style.opacity = opacity;
                     } else {
-                        opacity += 0.1;
-                        element.style.opacity = opacity;
-                        element.dataset.opacity = opacity;
+                        if (element.dataset.color !== color && element.dataset.opacity < 0.5) {
+                            element.style.backgroundColor = color;
+                            element.setAttribute('data-color', currentlyActive.dataset.color);
+                            opacity = 0.1;
+                            element.dataset.opacity = opacity;
+                            element.style.opacity = opacity;
+                        } else {
+                            opacity += 0.1;
+                            element.style.opacity = opacity;
+                            element.dataset.opacity = opacity;
+                        }
                     }
-                }
-            } else {
-                element.style.backgroundColor = color;
-                element.setAttribute('data-color', currentlyActive.dataset.color);
-                if (color === '#FFFFFF') {
-                    element.style.opacity = 1;
-                    element.dataset.opacity = 0.1;
                 } else {
-                    element.style.opacity = 1;
-                    element.dataset.opacity = 1;
+                    element.style.backgroundColor = color;
+                    element.setAttribute('data-color', currentlyActive.dataset.color);
+                    if (color === '#FFFFFF') {
+                        element.style.opacity = 1;
+                        element.dataset.opacity = 0.1;
+                    } else {
+                        element.style.opacity = 1;
+                        element.dataset.opacity = 1;
+                    }
                 }
             }
         }
@@ -114,20 +119,18 @@ function paintBucket() {
     pixels.forEach((pixel) => pixel.style.backgroundColor = color);
 }
 
-function clear() {
-    gridSizeLabel.textContent = `Grid size: ${gridSizeInput.value} x ${gridSizeInput.value}`;
-    const pixels = document.querySelectorAll('.pixel');
-    pixels.forEach((pixel) => pixel.style.backgroundColor = '');
+function changeGridSizeLabel() {
+    gridSizeLabel.textContent = `${gridSizeInput.value} x ${gridSizeInput.value}`;
+    gridSize = gridSizeInput.value;
 }
 
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
-    pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF');
+    pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF')
+    pixels.forEach((pixel) => pixel.style.opacity = 0.1);
+    pixels.forEach((pixel) => pixel.dataset.color = '#FFFFFF');
     pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
-    pixels.forEach((pixel) => pixel.setAttribute('data-color', '#FFFFFF'));
-    gridSize = gridSizeInput.value;
-    createGrid(gridSize);
-}
+};
 
 function changeColor() {
     color = this.dataset.color;
@@ -139,7 +142,6 @@ function changeColor() {
     this.removeEventListener('click', changeColor);
     this.addEventListener('click', toggleDouble);
 }
-
 
 function customColor() {
     this.dataset.color = this.value;
@@ -166,9 +168,11 @@ createGrid(gridSize);
 
 // EVENT LISTENERS:
 secretButton.addEventListener('click', changeColor);
-gridSizeInput.addEventListener('input', clear);
-gridSizeInput.addEventListener('change', reset);
+gridSizeInput.addEventListener('input', changeGridSizeLabel);
+gridSizeInput.addEventListener('change', createGrid);
 resetButton.addEventListener('click', reset);
+container.addEventListener('mouseover', draw);
+container.addEventListener('dblclick', paintBucket);
 container.addEventListener('touchmove', draw);
 container.addEventListener('dblclick', paintBucket);
 colorButtons.forEach((colorButton) => colorButton.addEventListener('click', changeColor));
