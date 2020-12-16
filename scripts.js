@@ -31,10 +31,8 @@ function createGrid() {
             container.appendChild(pixel);
         }
     }
-    gridSizeInput.addEventListener('input', reset, { once: true });
+    gridSizeInput.addEventListener('input', clear, { once: true });
 }
-
-
 
 function draw(e) {
     //e.stopPropagation();
@@ -124,12 +122,23 @@ function changeGridSizeLabel() {
     gridSize = gridSizeInput.value;
 }
 
+function clear() {
+    const pixels = document.querySelectorAll('.pixel');
+    pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF')
+    pixels.forEach((pixel) => pixel.style.opacity = 0.1);
+    pixels.forEach((pixel) => pixel.dataset.color = '#FFFFFF');
+    pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
+};
+
 function reset() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => pixel.style.backgroundColor = '#FFFFFF')
     pixels.forEach((pixel) => pixel.style.opacity = 0.1);
     pixels.forEach((pixel) => pixel.dataset.color = '#FFFFFF');
     pixels.forEach((pixel) => pixel.dataset.opacity = 0.1);
+    pixels.forEach((pixel) => pixel.remove());
+    gridSize = gridSizeInput.value;
+    createGrid(gridSize);
 };
 
 function changeColor() {
