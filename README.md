@@ -1,4 +1,4 @@
-# Sketch-Paint
+# Sketch Paint!
 A fun drawing web application!
 
 Features:
